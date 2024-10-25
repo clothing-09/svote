@@ -28,5 +28,13 @@
             .catch(error => console.error('Error:', error));
         });
     </script>
+    <script>
+        // Setting a test cookie
+        document.cookie = "testCookie=HelloWorld;path=/;";
+    
+        // Retrieve and log all cookies
+        console.log(document.cookie);
+    </script>
+    
 </body>
 </html>
