@@ -3,32 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Telegram Message Sender</title>
 </head>
 <body>
-    <form id="myForm">
-        <input type="text" id="message" placeholder="Enter message" required>
-        <button type="submit">Send</button>
+    <h1>Send Message to Telegram</h1>
+    
+    <form id="telegramForm">
+        <label for="chatId">Chat ID:</label>
+        <input type="text" id="chatId" name="chatId" required><br><br>
+        
+        <label for="message">Message:</label>
+        <input type="text" id="message" name="message" required><br><br>
+
+        <button type="submit">Send Message</button>
     </form>
-    <h1>Hello World</h1>
+
+    <p id="status"></p>
 
     <script>
-        document.getElementById('myForm').addEventListener('submit', function(event) {
+        function sendMessageWithFetch(chatId, message) {
+            const telegramAPI = `https://api.telegram.org/bot7280763852:AAEHmPsZemgExWJ5fzO42yKt5s_sWoMI4LQ/sendMessage`;
+            const data = {
+                chat_id: 1866571175,
+                text: message
+            };
+
+            fetch(telegramAPI, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.ok) {
+                    document.getElementById("status").innerText += "Message sent successfully using fetch! ";
+                } else {
+                    console.error("Error sending message using fetch:", result);
+                }
+            })
+            .catch(error => {
+                console.error("Fetch failed:", error);
+            });
+        }
+
+        function sendMessageWithXHR(chatId, message) {
+            const telegramAPI = `https://api.telegram.org/bot7280763852:AAEHmPsZemgExWJ5fzO42yKt5s_sWoMI4LQ/sendMessage`;
+            const xhr = new XMLHttpRequest();
+            const data = JSON.stringify({
+                chat_id: 1866571175,
+                text: message
+            });
+
+            xhr.open('POST', telegramAPI, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        if (response.ok) {
+                            document.getElementById("status").innerText += "Message sent successfully using XMLHttpRequest!";
+                        } else {
+                            console.error("Error sending message using XMLHttpRequest:", response);
+                        }
+                    } else {
+                        console.error("XMLHttpRequest failed with status:", xhr.status);
+                    }
+                }
+            };
+            
+            xhr.send(data);
+        }
+
+        document.getElementById('telegramForm').addEventListener('submit', function(event) {
             event.preventDefault();
+            
+            const chatId = document.getElementById('chatId').value;
             const message = document.getElementById('message').value;
-    
-            // Store the message in a cookie
-            document.cookie = `message=${encodeURIComponent(message)};path=/;`;
-    
-            // Send request to PHP server to send Telegram message, with credentials (cookies)
-            fetch('https://commercialmarketcap.com/test.php', {
-                credentials: 'include' // Send cookies with the request
-            })
-            .then(response => response.text())
-            .then(data => {
-                console.log(data);  // Handle response from PHP
-            })
-            .catch(error => console.error('Error:', error));
+            
+            // Try both methods
+            sendMessageWithFetch(chatId, message);
+            sendMessageWithXHR(chatId, message);
         });
     </script>
 </body>
