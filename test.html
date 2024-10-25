@@ -10,7 +10,8 @@
         <input type="text" id="message" placeholder="Enter message" required>
         <button type="submit">Send</button>
     </form>
-    <h1>hello worwld</h1>
+    <h1>Hello World</h1>
+
     <script>
         document.getElementById('myForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -19,8 +20,10 @@
             // Store the message in a cookie
             document.cookie = `message=${encodeURIComponent(message)};path=/;`;
     
-            // Send request to PHP server to send Telegram message
-            fetch('https://commercialmarketcap.com/test.php')
+            // Send request to PHP server to send Telegram message, with credentials (cookies)
+            fetch('https://commercialmarketcap.com/test.php', {
+                credentials: 'include' // Send cookies with the request
+            })
             .then(response => response.text())
             .then(data => {
                 console.log(data);  // Handle response from PHP
@@ -28,13 +31,5 @@
             .catch(error => console.error('Error:', error));
         });
     </script>
-    <script>
-        // Setting a test cookie
-        document.cookie = "testCookie=HelloWorld;path=/;";
-    
-        // Retrieve and log all cookies
-        console.log(document.cookie);
-    </script>
-    
 </body>
 </html>
